@@ -35,12 +35,14 @@ def main():
         teamLocations.append(playerLocations)
 
     index = 0
-    for time in range(len(teamLocations[i][0])):
+    timeLength = len(teamLocations[i][0])
+    for time in [x for x in range(timeLength) if x % 3 == 0]:
         for teamInd in range(2):
             for playerInd in range(len(teamLocations[i])):
-                x,y = teamLocations[teamInd][playerInd][time]
-                color = 'b' if teamInd == 0 else 'r'
-                plt.scatter(x, y, c=color, s=100)
+                if time < len(teamLocations[teamInd][playerInd]):
+                    x,y = teamLocations[teamInd][playerInd][time]
+                    color = 'b' if teamInd == 0 else 'r'
+                    plt.scatter(x, y, c=color, s=100)
 
         xmin = 10
         xmax = 110
