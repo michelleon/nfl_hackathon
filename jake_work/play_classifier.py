@@ -198,6 +198,9 @@ class Play(object):
                 x_data = x
                 y_data = y
             else:
+                # data_diff = x_data.shape[1] - x.shape[0]
+                # if x_data.shape[1] != x.shape[0]:
+                    # x = np.append(x, np.zeros)
                 x_data = np.vstack((x_data, x))
                 y_data = np.vstack((y_data, y))
         self.positions = np.array(positions)
@@ -322,8 +325,7 @@ def iter_plays(game_filename):
             continue
         try:
             plays.append(Play(play_json, player_by_id))
-        except Exception as e:
-            print e
+        except IndexError as e:
             skipped += 1
             continue
     print('Skipped %d due to error.' % skipped)
@@ -353,4 +355,3 @@ def write_plays(play_ids, game_num, group_num, game_filename):
         print 'found one'
         plays_to_write.append(play)
     write_js_formation('.', game_num, group_num, plays_to_write)
-
