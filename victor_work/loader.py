@@ -44,6 +44,24 @@ def main():
                     color = 'b' if teamInd == 0 else 'r'
                     plt.scatter(x, y, c=color, s=100)
 
+        # if you want to show paths, set this to true
+        showPaths = False
+
+        if showPaths:
+            for i in range(2):
+                for player in teamLocations[i]:
+                    xData = []
+                    yData = []
+
+                    for x,y in player:
+                        xData.append(x)
+                        yData.append(y)
+
+                    if i == 1:
+                        plt.plot(xData, yData, c='r')
+                    else:
+                        plt.plot(xData, yData, c='b')
+
         xmin = 10
         xmax = 110
         ymin = 0
