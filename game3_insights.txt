@@ -1,0 +1,47 @@
+Key Insight:
+This is the formation the offense likes to line up in early in the downs and usually with more yards to go. Out of the 6 times, 5 were run on 1st or 2nd down with 6 or more yards to go. 3 of the 5 were run when it was 1st and 10.
+
+Average team runs 60-70 offensiveplays per game, so identifying 10% of them as part of one group is pretty good
+
+---- looking at new play -----
+146
+play_type_pass
+(12:49) Scott Dray pass short left to Kevin Sambrano to FRA 19 for 6 yards (Paul Harris) Caught at FRA 14.  5-yds YAC 
+quarter: 1, down: 2 with 17 yardsToGo
+yardline: FRA 13
+team id 5
+---- looking at new play -----
+1093
+play_type_rush
+(12:15) Gerald Myers right end to HAM 36 for 2 yards Player (Tramaine Sample) 
+quarter: 2, down: 2 with 6 yardsToGo
+yardline: HAM 38
+team id 5
+---- looking at new play ----- 
+3301
+play_type_rush
+(12:01) Tyler Hardwick left end to HAM 43 for 6 yards (Joe Richardson) 
+quarter: 4, down: 1 with 10 yardsToGo
+yardline: HAM 49
+team id 5
+---- looking at new play -----
+3347
+play_type_pass
+(10:38) Scott Dray pass incomplete short left to Markus Adkins 
+quarter: 4, down: 3 with 2 yardsToGo
+yardline: HAM 41
+team id 5
+---- looking at new play -----
+3277
+play_type_pass
+(12:39) Scott Dray pass short left to Derek Miller to HAM 49 for 12 yards (Joe Richardson) Caught at FRA 44.  7-yds YAC 
+quarter: 4, down: 1 with 10 yardsToGo
+yardline: FRA 39
+team id 5
+---- looking at new play -----
+4573
+play_type_pass
+(12:03) Scott Dray pass incomplete deep left to Tyler Hardwick (Tramaine Sample) 
+quarter: 5, down: 1 with 10 yardsToGo
+yardline: FRA 19
+team id 5
