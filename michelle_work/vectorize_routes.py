@@ -8,7 +8,15 @@ def load_rosters():
         team1 = json.load(f1)
     with open('data/team2.json') as f2:
         team2 = json.load(f2)
-    return [team1, team2] # teams 0 indexed
+    with open('data/team3.json') as f1:
+        team3 = json.load(f1)
+    with open('data/team4.json') as f2:
+        team4 = json.load(f2)
+    with open('data/team5.json') as f1:
+        team5 = json.load(f1)
+    with open('data/team6.json') as f2:
+        team6 = json.load(f2)
+    return [team1, team2, team3, team4, team5, team6] # teams 0 indexed
 
 def load_game_routes(game_filepath):
     with open(game_filepath) as data_file:
@@ -121,8 +129,12 @@ def visualize_route_vector(vector):
 
     plt.show()
 
+
+
 routes = load_game_routes('data/game-1-q1.json')
-visualize_route_vector(routes[0])
+for r in routes:
+    visualize_route_vector(r)
+# visualize_route_vector(routes[0])
 
 
 
