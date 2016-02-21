@@ -1,23 +1,14 @@
 import numpy as np
+import numpy.random
 import matplotlib.pyplot as plt
-plt.ion()
 
-import random
-t=0
-r=3.0
-n=0
-A=[]
-for x in range(10):
-    for y in range(10):
-        A.append([random.uniform(0,1),random.uniform(0,1)])
+# Generate some test data
+x = np.random.randn(60000)
+y = np.random.randn(60000)
 
+heatmap, xedges, yedges = np.histogram2d(x, y, bins=100)
+extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
 
-while n<=100:
-    for m in range(len(A)):
-        A[m][0]=r*A[m][0]*(1-A[m][0])
-        A[m][1]=r*A[m][1]*(1-A[m][1])
-    for m in range(len(A)):
-        plt.plot(A[m][0],A[m][1], "x", color="blue")
-    plt.draw()
-    plt.pause(1)
-    plt.clf()
+plt.clf()
+plt.imshow(heatmap, extent=extent)
+plt.show()

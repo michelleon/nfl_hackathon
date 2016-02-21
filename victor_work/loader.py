@@ -4,6 +4,10 @@ import time
 
 from pprint import pprint
 
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import numpy as np
+
 
 def main():
     with open('110.json') as data_file:
@@ -13,6 +17,7 @@ def main():
 
     plt.figure()
     plt.ion()
+    img=mpimg.imread('field.png')
 
     teamLocations = []
 
@@ -70,6 +75,7 @@ def main():
         axes.set_xlim([xmin,xmax])
         axes.set_ylim([ymin,ymax])
 
+        imgplot = plt.imshow(img,  extent=[10, 110, 0, 53.3])
         plt.draw()
         plt.pause(0.01)
         plt.clf()
