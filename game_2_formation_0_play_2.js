@@ -1,4 +1,4 @@
-var formation = {
+var formation2 = {
     starting_positions: [
         [0.00, 0.00, "C", 0],
         [7.29, -17.97, "CB", 1],
