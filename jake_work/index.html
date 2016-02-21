@@ -9,6 +9,7 @@
               border: 1px solid black;
               float: left;
               stroke: black;
+              margin: 10px;
             }
         </style>
     </head>
@@ -72,7 +73,31 @@
                   [-1.11,16.43, 'WR', 7],
                   [-0.36,-1.31, 'OG', 8],
                   [0.00,0.00, 'C', 9],
-                  [-0.66,3.33, 'OT', 10]
+                  [-0.66,3.33, 'OT', 10],
+                  [1.99,2.95,'DE',11],
+                  [6.88,15.18,'CB',12],
+                  [1.50,-4.95,'DE',13],
+                  [1.36,5.17,'DE',14],
+                  [9.88,6.63,'SS',15],
+                  [9.47,-4.15,'FS',16],
+                  [2.93,-8.40,'CB',17],
+                  [2.09,-2.26,'DE',18],
+                  [4.39,4.87,'OLB',19],
+                  [5.26,-1.01,'LB',20],
+                  [7.40,-11.40,'CB',21]
+              ],
+              defensive_positions: [
+                  [1.99,2.95,'DE',0],
+                  [6.88,15.18,'CB',1],
+                  [1.50,-4.95,'DE',2],
+                  [1.36,5.17,'DE',3],
+                  [9.88,6.63,'SS',4],
+                  [9.47,-4.15,'FS',5],
+                  [2.93,-8.40,'CB',6],
+                  [2.09,-2.26,'DE',7],
+                  [4.39,4.87,'OLB',8],
+                  [5.26,-1.01,'LB',9],
+                  [7.40,-11.40,'CB',10],
               ],
               // for each position above in starting_positions there can be any number of
               // routes that show how they moved in different plays starting from the same
@@ -95,7 +120,8 @@
               ],
               total: 3,
               run: 1,
-              pass: 2
+              pass: 2,
+              yardage: 20,
             }
 
             var formation2 = {
@@ -127,13 +153,15 @@
               ],
               total: 3,
               run: 1,
-              pass: 2
+              pass: 2,
+              yardage: 10,
             }
 
             function play(formation, element_id) {
               var width = 800;
               var height = 500;
-              var player_radius = 10;
+              var player_radius = 13;
+              var text_size = 10;
               var x_scale = d3.scale.linear()
                     .domain([-28, 28])
                     .range([0, width]);
@@ -161,17 +189,9 @@
                 return y_location(position) + 3;
               };
 
-
-              svg.selectAll("text")
-                 .data(formation.starting_positions)
-                 .enter()
-                 .append("text")
-                 .text(function(position) {
-                      return position[2];
-                 })
-                 .attr("x", x_text_location)
-                 .attr("y", y_text_location)
-                 .style("font-size", 10);
+              function isDefense(position) {
+                return position[3] >= 11;
+              }
 
               function draw_routes(position) {
                   var lineFunction = d3.svg.line()
@@ -189,6 +209,17 @@
                     .attr("d", d3.svg.symbol().type("triangle-down")(10,1));
               }
 
+              // add field underneath
+              var imgs = svg.selectAll("image")
+                .data([0])
+                .enter()
+                .append("svg:image")
+                .attr("xlink:href", "images/field.png")
+                .attr("x", "-600")
+                .attr("y", "-1000")
+                .attr("width", "2000")
+                .attr("height", "2000");
+
               svg.selectAll("circle")
                 .data(formation.starting_positions)
                 .enter()
@@ -196,17 +227,45 @@
                 .attr("cx", x_location)
                 .attr("cy", y_location)
                 .attr("r", player_radius)
-                .style("fill", "grey")
-                .style("opacity", 0.5)
-                .on("mouseover", function () {
+                .style("fill", function (position) {
+                    if (isDefense(position)) {
+                      return "red";
+                    } else {
+                      return "blue";
+                    }
+                })
+                // .style("opacity", 0.5)
+                .on("mouseover", function (position) {
                     d3.select(this)
                       .style("fill", "orange");
                 })
-                .on("mouseout", function () {
+                .on("mouseout", function (position) {
+                    var circle_color = "";
+                    if (isDefense(position)) {
+                      circle_color = "red";
+                    } else {
+                      circle_color = "blue";
+                    }
                     d3.select(this)
-                      .style("fill", "grey");
+                      .style("fill", circle_color);
                 })
                 .on("click", draw_routes);
+
+              // add text with positions
+              svg.selectAll("text")
+                 .data(formation.starting_positions)
+                 .enter()
+                 .append("text")
+                 .text(function(position) {
+                      return position[2];
+                 })
+                 .attr("x", x_text_location)
+                 .attr("y", y_text_location)
+                 .attr("pointer-events", "none")
+                 .style("font-size", text_size)
+                 .style("fill", "white")
+                 .style("stroke-width", 0.05)
+                 .style("stroke", "white");
             }
             play(formation1, '#formation-display-1');
             play(formation2, '#formation-display-2');
