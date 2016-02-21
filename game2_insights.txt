@@ -1,0 +1,62 @@
+Key Insight:
+This formation is mainly used for pass plays. The team likes using this formation in the no huddle offense.
+Defense lines up similarly in reaction to this formation.
+
+Keep
+1236
+1599
+2180
+2287
+3521
+3953
+3977
+
+---- looking at new play -----
+1236
+play_type_pass
+(11:17) (Shotgun) William McGrath pass short right to Josh Kreiter pushed ob at BER 43 for 12 yards (Jamaal Hardwick) 
+quarter: 2, down: 3 with 7 yardsToGo
+game clock: 11:17
+yardline: BER 31
+---- looking at new play -----
+1599
+play_type_pass
+(5:37) (Shotgun) William McGrath pass incomplete short right to Craig Louis-Jean 
+quarter: 2, down: 3 with 19 yardsToGo
+game clock: 05:37
+yardline: BER 13
+---- looking at new play -----
+2180
+play_type_sack
+(:31) (No Huddle, Shotgun) William McGrath sacked at BER 19 for -5 yards (Mike White) 
+quarter: 2, down: 1 with 10 yardsToGo
+game clock: 00:31
+yardline: BER 24
+---- looking at new play -----
+2287
+play_type_pass
+(14:32) (Shotgun) William McGrath pass short right to Doug Bibbs to BER 17 for 6 yards (Jamaal Hardwick) 
+quarter: 3, down: 3 with 19 yardsToGo
+game clock: 14:32
+yardline: BER 11
+---- looking at new play -----
+3521
+play_type_rush
+(12:24) (No Huddle, Shotgun) Justin Williams up the middle to BER 47 for 2 yards (Desmond McClendon) 
+quarter: 4, down: 1 with 10 yardsToGo
+game clock: 12:24
+yardline: BER 45
+---- looking at new play -----
+3953
+play_type_pass
+(5:59) (Shotgun) Lowell Wooten pass short left to Tyrann Wilcox to BER 21 for 1 yard (Nate Dubose) 
+quarter: 4, down: 1 with 10 yardsToGo
+game clock: 05:59
+yardline: BER 20
+---- looking at new play -----
+3977
+play_type_pass
+(5:31) (No Huddle, Shotgun) Lowell Wooten pass short middle to Chris Jones to BER 28 for 7 yards (Danny Southward) 
+quarter: 4, down: 2 with 9 yardsToGo
+game clock: 05:31
+yardline: BER 21
