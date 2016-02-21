@@ -157,11 +157,14 @@
               yardage: 10,
             }
 
+
             function play(formation, element_id) {
               var width = 800;
               var height = 500;
               var player_radius = 13;
               var text_size = 10;
+              var lines_by_player_id = {};
+
               var x_scale = d3.scale.linear()
                     .domain([-28, 28])
                     .range([0, width]);
@@ -195,23 +198,39 @@
               }
 
               function draw_routes(position) {
-                  var lineFunction = d3.svg.line()
-                        .x(x_location)
-                        .y(y_location)
-                        .interpolate("linear");
                   var player_idx = position[3];
+                  var string_player_idx = player_idx + '';
+                  if (!(string_player_idx in lines_by_player_id)) {
+                    console.log("adding lines");
+                    var lines = [];
+                    var lineFunction = d3.svg.line()
+                          .x(x_location)
+                          .y(y_location)
+                          .interpolate("linear");
 
 
-                  for (var i = 0; i < formation.routes[player_idx].length; i++) {
-                    svg.append("path")
-                        .attr("d", lineFunction(formation.routes[player_idx][i]))
-                        .style("stroke-width", 5)
-                        .style("stroke", "black")
-                        .style("fill", "none");
+                    for (var i = 0; i < formation.routes[player_idx].length; i++) {
+                      var line = svg.append("path")
+                          .attr("d", lineFunction(formation.routes[player_idx][i]))
+                          .style("stroke-width", 5)
+                          .style("stroke", "black")
+                          .style("fill", "none");
 
-                    var arrow = svg.append("svg:path")
-                      .attr("d", d3.svg.symbol().type("triangle-down")(10,1));
+                      var arrow = svg.append("svg:path")
+                        .attr("d", d3.svg.symbol().type("triangle-down")(10,1));
+
+                      lines.push(line);
+                    }
+                    lines_by_player_id[string_player_idx] = lines;
+                  } else {
+                    console.log("removing lines");
+                    var lines = lines_by_player_id[string_player_idx];
+                    for (var i = 0; i < lines.length; i++) {
+                      lines[i].remove();
+                    }
+                    delete lines_by_player_id[string_player_idx];
                   }
+
               }
 
               // add field underneath
