@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test</title>
+        <script type="text/javascript" src="d3/d3.v3.js"></script>
+        <style type="text/css">
+            .formation-display {
+              border: 1px solid black;
+              float: left;
+              stroke: black;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 align="center">Most Common Formations</h1>
+        <div id='formation1' class='formation'>
+          <div id='formation-display-1' class="formation-display"></div>
+          <div id='formation-text-1' class='formation-summary'>
+            <p align="center"> Just mocking this panel up cool if we could get the play descriptions on the right here to connect to the displays, so you can hover over the description and the routes pop up. </p>
+            <table border="1" align="center">
+              <tr>
+                <th>Play Type</th>
+                <th>Count</th>
+                <th>Pct.</th>
+              </tr>
+              <tr>
+                <td>Run</td>
+                <td>2</td>
+                <td>40%</td>
+              </tr>
+              <tr>
+                <td>Pass</td>
+                <td>3</td>
+                <td>60%</td>
+              </tr>
+            </table>
+            <table border="1">
+              <tr>
+                <th>Qrtr</th>
+                <th>Time</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>Q1</td>
+                <td>02:13</td>
+                <td>Peyton Manning pass short left to Demaryius Thomas for 5 yards (Patrick Peterson).</td>
+              </tr>
+              <tr>
+                <td>Q2</td>
+                <td>08:43</td>
+                <td>C.J. Anderson up the middle for 2 yards.</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div id='formation2' class='formation'>
+          <div id='formation-display-2' class="formation-display"></div>
+          <div id='formation-text-2' class='formation-summary'>
+          </div>
+        </div>
+        <script type="text/javascript">
+            var formation1 = {
+              starting_positions: [
+                  [-4.48, 0.30, 'QB', 0],
+                  [-2.79,2.99, 'RB', 1],
+                  [-0.47,-2.82, 'OT', 2],
+                  [-0.15,5.70, 'TE', 3],
+                  [-1.06,-10.33, 'WR', 4],
+                  [-0.78,-8.65, 'WR', 5],
+                  [-0.60,1.76, 'OG', 6],
+                  [-1.11,16.43, 'WR', 7],
+                  [-0.36,-1.31, 'OG', 8],
+                  [0.00,0.00, 'C', 9],
+                  [-0.66,3.33, 'OT', 10]
+              ],
+              // for each position above in starting_positions there can be any number of
+              // routes that show how they moved in different plays starting from the same
+              // formation
+              routes: [
+                [],
+                [
+                  [[-2.79, 2.99], [-1.54, 4.2], [-1.3, 6], [-1.3, 12], [-0.3, 14]],
+                  [[-2.79, 2.99], [-1.54, 4.2], [-0.2, 6], [1.2, 12], [1.8, 14]]
+                ],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+              ],
+              total: 3,
+              run: 1,
+              pass: 2
+            }
+
+            var formation2 = {
+              starting_positions: [
+                  [-4.48, 0.30, 'QB', 0],
+                  [-2.79,2.99, 'RB', 1],
+                  [-0.47,-2.82, 'OT', 2],
+                  [-0.15,5.70, 'TE', 3],
+                  [-1.06,-10.33, 'WR', 4],
+                  [-0.78,-8.65, 'WR', 5],
+                  [-0.60,1.76, 'OG', 6],
+                  [-1.11,16.43, 'WR', 7],
+                  [-0.36,-1.31, 'OG', 8],
+                  [0.00,0.00, 'C', 9],
+                  [-0.66,3.33, 'OT', 10]
+              ],
+              routes: [
+                [],
+                [[[-2.79, 2.99], [-1.54, 4.2], [-1.3, 6], [-1.3, 12], [-0.3, 14]]],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+              ],
+              total: 3,
+              run: 1,
+              pass: 2
+            }
+
+            function play(formation, element_id) {
+              var width = 800;
+              var height = 500;
+              var player_radius = 10;
+              var x_scale = d3.scale.linear()
+                    .domain([-28, 28])
+                    .range([0, width]);
+              var y_scale = d3.scale.linear()
+              // reversing signs to get offense direction pointing up
+                    .domain([-40, 15])
+                    .range([0, height]);
+              var svg = d3.select(element_id)
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+              function x_location(position) {
+                return x_scale(position[1]);
+              };
+
+              function y_location(position) {
+                return y_scale(-position[0]);
+              };
+
+              function x_text_location(position) {
+                return x_location(position) - 4 * position[2].length;
+              };
+
+              function y_text_location(position) {
+                return y_location(position) + 3;
+              };
+
+
+              svg.selectAll("text")
+                 .data(formation.starting_positions)
+                 .enter()
+                 .append("text")
+                 .text(function(position) {
+                      return position[2];
+                 })
+                 .attr("x", x_text_location)
+                 .attr("y", y_text_location)
+                 .style("font-size", 10);
+
+              function draw_routes(position) {
+                  var lineFunction = d3.svg.line()
+                        .x(x_location)
+                        .y(y_location)
+                        .interpolate("linear");
+                  var player_idx = position[3];
+                  svg.append("path")
+                  .attr("d", lineFunction(formation.routes[player_idx][0]))
+                  .style("stroke-width", 5)
+                  .style("stroke", "black")
+                  .style("fill", "none");
+
+                  var arrow = svg.append("svg:path")
+                    .attr("d", d3.svg.symbol().type("triangle-down")(10,1));
+              }
+
+              svg.selectAll("circle")
+                .data(formation.starting_positions)
+                .enter()
+                .append("circle")
+                .attr("cx", x_location)
+                .attr("cy", y_location)
+                .attr("r", player_radius)
+                .style("fill", "grey")
+                .style("opacity", 0.5)
+                .on("mouseover", function () {
+                    d3.select(this)
+                      .style("fill", "orange");
+                })
+                .on("mouseout", function () {
+                    d3.select(this)
+                      .style("fill", "grey");
+                })
+                .on("click", draw_routes);
+            }
+            play(formation1, '#formation-display-1');
+            play(formation2, '#formation-display-2');
+
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
