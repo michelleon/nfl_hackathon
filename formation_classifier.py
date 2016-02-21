@@ -261,3 +261,13 @@ class Formation(object):
                 starting_point['x'] = center_starting_point['x'] - starting_point['x']
                 starting_point['y'] = center_starting_point['y'] - starting_point['y']
         return offensive_starting_points, defensive_starting_points
+
+
+
+def main(game_filename):
+    player_by_id = get_player_by_id()
+    formations = get_formations(game_filename)
+    plays_by_features = defaultdict(list)
+    for formation in formations:
+        plays_by_features[tuple(formation.get_offensive_starting_point_features())] = formation
+    return plays_by_features
