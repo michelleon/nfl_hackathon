@@ -172,7 +172,8 @@
               var svg = d3.select(element_id)
                 .append("svg")
                 .attr("width", width)
-                .attr("height", height);
+                .attr("height", height)
+                .style("background-color", "#243f09");
               function x_location(position) {
                 return x_scale(position[1]);
               };
@@ -199,14 +200,18 @@
                         .y(y_location)
                         .interpolate("linear");
                   var player_idx = position[3];
-                  svg.append("path")
-                  .attr("d", lineFunction(formation.routes[player_idx][0]))
-                  .style("stroke-width", 5)
-                  .style("stroke", "black")
-                  .style("fill", "none");
 
-                  var arrow = svg.append("svg:path")
-                    .attr("d", d3.svg.symbol().type("triangle-down")(10,1));
+
+                  for (var i = 0; i < formation.routes[player_idx].length; i++) {
+                    svg.append("path")
+                        .attr("d", lineFunction(formation.routes[player_idx][i]))
+                        .style("stroke-width", 5)
+                        .style("stroke", "black")
+                        .style("fill", "none");
+
+                    var arrow = svg.append("svg:path")
+                      .attr("d", d3.svg.symbol().type("triangle-down")(10,1));
+                  }
               }
 
               // add field underneath
@@ -215,10 +220,10 @@
                 .enter()
                 .append("svg:image")
                 .attr("xlink:href", "images/field.png")
-                .attr("x", "-600")
-                .attr("y", "-1000")
-                .attr("width", "2000")
-                .attr("height", "2000");
+                .attr("x", "-350")
+                .attr("y", "-750")
+                .attr("width", "1500")
+                .attr("height", "1500");
 
               svg.selectAll("circle")
                 .data(formation.starting_positions)
