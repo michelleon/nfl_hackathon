@@ -208,12 +208,13 @@
                           .y(y_location)
                           .interpolate("linear");
 
-
                     for (var i = 0; i < formation.routes[player_idx].length; i++) {
                       var line = svg.append("path")
                           .attr("d", lineFunction(formation.routes[player_idx][i]))
-                          .style("stroke-width", 5)
-                          .style("stroke", "black")
+                          .style("stroke-width", 3)
+                          .style("stroke", "yellow")
+                          .style("stroke-dasharray", ("5, 5"))  // <== This line here!!
+
                           .style("fill", "none");
 
                       var arrow = svg.append("svg:path")
