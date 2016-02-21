@@ -3,15 +3,22 @@ import matplotlib.pyplot as plt
 import os
 from pprint import pprint
 
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.misc import imread
+import matplotlib.cbook as cbook
+
 def replay():
 
 
     for root, dirs, files in os.walk("/Users/David/Desktop/nflhackathon/game1plays/"):
-        xData = []
-        yData = []
+
         for file in files:
+
+            filename = "/Users/David/Desktop/nflhackathon/game1plays/" + file
+
             if file.endswith(".json"):
-                with open(file) as data_file:
+                with open(filename) as data_file:
                     data = json.load(data_file)
 
                 teamData = ['homeTrackingData', 'awayTrackingData']
@@ -24,8 +31,6 @@ def replay():
                 for i in range(2):
                     team = teamData[i]
                     playerLocationData = data[team]
-
-                    # print playerLocationData
 
                     playerLocations = []
 
@@ -49,6 +54,24 @@ def replay():
                                 color = 'b' if teamInd == 0 else 'r'
                                 plt.scatter(x, y, c=color, s=100)
 
+                    # if you want to show paths, set this to true
+                    showPaths = True
+
+                    if showPaths:
+                        for i in range(2):
+                            for player in teamLocations[i]:
+                                xData = []
+                                yData = []
+
+                                for x,y in player:
+                                    xData.append(x)
+                                    yData.append(y)
+
+                                if i == 1:
+                                    plt.plot(xData, yData, c='r')
+                                else:
+                                    plt.plot(xData, yData, c='b')
+
                     xmin = 10
                     xmax = 110
                     ymin = 0
@@ -57,11 +80,21 @@ def replay():
                     axes.set_xlim([xmin,xmax])
                     axes.set_ylim([ymin,ymax])
 
+                    im = plt.imread('/Users/David/Desktop/nflhackathon/game1plays/football_field.png')
+                    implot = plt.imshow(im, extent=[5, 115, 0, 53.3])
+
+
                     plt.draw()
                     plt.pause(0.01)
                     plt.clf()
+                   
             plt.close()
+
+
 replay()
+
+
+
 
 
 
